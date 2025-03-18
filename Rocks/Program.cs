@@ -221,31 +221,44 @@ while (true)
             Console.WriteLine();
 
             Console.WriteLine("Agora vem a parte interessante...");
-            int valido = -1;
+
+            Console.WriteLine("\nVocê terá 5 segundos.");
+
             string finalJogador = " ";
             int finalJogadorNum = 0;
 
-            while (valido == -1)
+            Console.WriteLine($"\nSelecione sua jogada final: 1 - {Elementos[mao1]} ou 2 - {Elementos[mao2]}");
+
+            Task<int> entradaTask = Task.Run(() =>
             {
-                Console.WriteLine($"\nSelecione sua jogada final: 1 - {Elementos[mao1]} ou 2 - {Elementos[mao2]}");
-                finalJogador = Console.ReadLine();
-                if(finalJogador == "1")
+                while (true)
                 {
-                    finalJogadorNum = mao1;
-                    valido = 0;
-                }
-                else if(finalJogador == "2")
-                {
-                    finalJogadorNum = mao2;
-                    valido = 0;
-                }
-                else
-                {
+                    finalJogador = Console.ReadLine();
+                    if (finalJogador == "1") return mao1;
+                    if (finalJogador == "2") return mao2;
                     Console.WriteLine("Selecione uma de suas mãos...");
                 }
+            });
 
-                
+            Task tempoLimiteTask = Task.Delay(5000); // 5 segundos
+
+            // Espera pela entrada ou pelo tempo limite
+            int indice = Task.WaitAny(entradaTask, tempoLimiteTask);
+
+            if (indice == 0) // Jogador escolheu a tempo
+            {
+                finalJogadorNum = entradaTask.Result;
             }
+            else // Tempo esgotado
+            {
+                Console.WriteLine("\nTempo esgotado! Escolhendo automaticamente...");
+                finalJogadorNum = mao1; // Define a primeira mão como escolha padrão
+            }
+
+            Console.WriteLine($"Você jogou: {Elementos[finalJogadorNum]}");
+
+
+
 
             int finalComp = jogadaComputador(mao1, mao2, compMao1, compMao2);
 
