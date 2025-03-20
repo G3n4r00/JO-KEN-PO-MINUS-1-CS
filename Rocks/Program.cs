@@ -233,9 +233,8 @@ while (true)
             {
                 while (true)
                 {
-                    finalJogador = Console.ReadLine();
-                    if (finalJogador == "1") return mao1;
-                    if (finalJogador == "2") return mao2;
+                    if (Console.ReadKey().KeyChar == '1') return mao1;
+                    if (Console.ReadKey().KeyChar == '2') return mao2;
                     Console.WriteLine("Selecione uma de suas mãos...");
                 }
             });
@@ -304,7 +303,7 @@ while (true)
     }
     else if (Console.ReadKey().KeyChar == '0')
     {
-        Console.WriteLine("👋 Tchau! Até a próxima");
+        Console.WriteLine("\n👋 Tchau! Até a próxima");
         break;
     }
     else
@@ -322,6 +321,8 @@ var ranking = jogadores
     .ToList();
 
 int posicao = 1;
+Console.WriteLine("\n===========================================");
+Console.WriteLine();
 Console.WriteLine("\n🏆 Ranking Atual 🏆");
 for (int i = 0; i < ranking.Count; i++)
 {
@@ -333,7 +334,8 @@ for (int i = 0; i < ranking.Count; i++)
     Console.WriteLine($"{posicao}º lugar: {ranking[i].Nome} ({ranking[i].Pontos} pontos)");
 }
 
-Console.WriteLine("👋 Tchau! Até a próxima");
+Console.WriteLine("\n===========================================");
+Console.WriteLine("\n👋 Tchau! Até a próxima");
 
 
 //int jogadaComputador(int j1, int j2, int c1, int c2)
